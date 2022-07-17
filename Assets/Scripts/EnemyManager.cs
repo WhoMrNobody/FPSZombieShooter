@@ -8,8 +8,9 @@ public class EnemyManager : MonoBehaviour
    
     public Animator enemyAnimator;
     public float damageValue;
+    public float health = 100f;
     private NavMeshAgent _navMeshAgent;
-     private GameObject _player;
+    private GameObject _player;
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -33,6 +34,16 @@ public class EnemyManager : MonoBehaviour
         if(collision.gameObject == _player){
 
             _player.GetComponent<PlayerHealth>().Hit(damageValue);
+        }
+    }
+
+    public void Hit(float damage){
+
+        health -= damage;
+
+        if(health <= 0){
+
+            Destroy(gameObject);
         }
     }
 }
