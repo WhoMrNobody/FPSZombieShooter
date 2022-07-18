@@ -11,6 +11,7 @@ public class EnemyManager : MonoBehaviour
     public float health = 100f;
     private NavMeshAgent _navMeshAgent;
     private GameObject _player;
+    public GameManager gameManager;
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -43,7 +44,8 @@ public class EnemyManager : MonoBehaviour
 
         if(health <= 0){
 
-            Destroy(gameObject);
+            gameManager.enemiesAlive--;
+            Destroy(gameObject);    
         }
     }
 }
