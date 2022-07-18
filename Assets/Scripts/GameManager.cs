@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class GameManager : MonoBehaviour
     public int round = 0;
     public GameObject[] spawnPoints;
     public GameObject enemyPrefab;
+    public TMP_Text roundText, healthText, roundsSurvived;
+    public GameObject gameOverPanel;
     void Start()
     {
         
@@ -18,6 +22,7 @@ public class GameManager : MonoBehaviour
     {
         if(enemiesAlive == 0){
             round++;
+            roundText.text = "Round " + round;
             NextWave(round);
         }
            
@@ -34,8 +39,26 @@ public class GameManager : MonoBehaviour
             enemySpawned.GetComponent<EnemyManager>().gameManager= GetComponent<GameManager>();
             enemiesAlive ++;
             
-        }
+        }   
+    }
 
-        
+    public void GameFailed(){
+
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        gameOverPanel.SetActive(true);
+        roundsSurvived.text=round.ToString();
+    }
+
+    public void Restart(){
+
+        Time.timeScale = 1;
+        SceneManager.LoadSceneAsync(1);
+    }
+
+    public void BackToMainMenu(){
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }
